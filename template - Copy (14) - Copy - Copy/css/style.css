@@ -28,17 +28,41 @@ body{
 }
 
 .card{
-  border: 5px outset green;
+  border: 5px outset black;
   width: 80%;
   height: 100%;
   margin: 10px;
-  color: white;
+  background-color: white;
   font-family: monospace;
   font-size: 150%;
   display: flex;
   justify-content: center;
   align-items: center;
+  
+}
+
+
+#theFirst {
+  background-color: blueviolet;
+}
+
+#theSecond {
+  background-color: brown;
+}
+
+#theThird {
   background-color: blue;
+}
+
+#theFourth {
+  background-color: chartreuse;
+}
+
+#theFifth {
+  background-color: deeppink;
+}
+#theSixth{
+  background-color: aquamarine;
 }
 
 /******************************************
