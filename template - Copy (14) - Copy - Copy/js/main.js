@@ -12,11 +12,11 @@ const containerThree = document.getElementById('theThird')
 const containerFour = document.getElementById('theFourth')
 const containerFive = document.getElementById('theFifth')
 
-containerOne.children[0].style.backgroundImage = `url('../CARDS/${cardFaces[0]}')`
+
 
 document.querySelector('body').addEventListener('click', doStuff)
 
-
+let randomizedCardFaces = cardFaces.sort( () => Math.random() > .5 ? 1 : -1 );
 window.onload = () => {
     arrayOfContainers = [Array.from(containerOne.children), Array.from(containerTwo.children), Array.from(containerThree.children), Array.from(containerFour.children), Array.from(containerFive.children)]
 
@@ -25,8 +25,23 @@ window.onload = () => {
             spreadTheCards(arrayOfContainers[i], 'normal', 'forwards', 1000)
         }, `${500 * i}`)
     }
+
+    
+    
+    
+        
+        makeCardsHaveFaces(arrayOfContainers[0].concat(arrayOfContainers[1], arrayOfContainers[2], arrayOfContainers[3], arrayOfContainers[4]))
+        
+    
+    
+    // containerOne.children[0].style.backgroundImage = `url('../CARDS/${cardFaces[0]}')`
 }
 
+function makeCardsHaveFaces(e) {
+    for(let i = 0; i <= e.length - 1; i++){
+        e[i].style.backgroundImage = `url(./img/${randomizedCardFaces[i]})`
+    }
+}
 
 
 let deckArray = []

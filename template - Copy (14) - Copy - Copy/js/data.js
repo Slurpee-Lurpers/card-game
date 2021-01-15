@@ -1,4 +1,4 @@
-const cardFaces = []
+const cardFaces = ['1J.svg', '2J.svg', 'headshot1.jpg']
 
 for (let i = 0; i <= 3; i++) {
     if(i === 0){
@@ -10,17 +10,18 @@ for (let i = 0; i <= 3; i++) {
     }else if( i === 3){
         cardSuit = 'H'
     }
-    for (let y = 2; y <= 13; y++) {
+    console.log(i)
+    for (let y = 2; y <= 14; y++) {
         cardNumber = y;
-        if( y <= 8){
+        if( y <= 9){
             cardName = cardNumber
-        }else if( y === 9){
+        }else if( y === 10){
             cardName = 'T'
-        }else if ( y === 10){
+        }else if ( y === 11){
             cardName = 'J'
-        }else if( y === 11 ){
+        }else if( y === 12 ){
             cardName = 'Q'
-        }else if(y === 12){
+        }else if(y === 13){
             cardName = 'K'
         }else{
             cardName = 'A'
@@ -30,7 +31,7 @@ for (let i = 0; i <= 3; i++) {
 
     }
 }
-console.log(cardFaces);
+
 
 /*
 4 suits  C D S H
