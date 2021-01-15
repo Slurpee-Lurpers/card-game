@@ -22,7 +22,7 @@ window.onload = () => {
 
     for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
         setTimeout(() => {
-            spreadTheCards(arrayOfContainers[i], 'normal', 'forwards', 1000)
+            spreadTheCards(arrayOfContainers[i], 'normal', 'forwards', 2000)
         }, `${500 * i}`)
     }
 
@@ -107,9 +107,19 @@ function doStuff(e) {
 
     for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
         setTimeout(() => {
-            goBackTheCards(arrayOfContainers[i], 'normal', 'forwards', 1000)
+            goBackTheCards(arrayOfContainers[i], 'normal', 'forwards', 2000)
         }, `${500 * i}`)
     }
+
+    for (let i = 0; i <= arrayOfContainers.length - 1; i++){
+    
+    setTimeout( () => {
+        flipThePilesOver(arrayOfContainers[i])
+    }, 4500)
+    
+    }
+
+
 
 
     setTimeout( () => {
@@ -118,9 +128,8 @@ function doStuff(e) {
         bringThePilesTogether(arrayOfContainers[i], x)
             x-= 20;
         }
-    }, 3000)
+    }, 8000)
     // reOrderTheDeck(deckArray)
-    
     
     }
     
