@@ -62,13 +62,13 @@ body {
 .container {
   width: 20%;
   height: 100%;
-  border: 1px ridge rgb(206, 98, 98);
+  border: 1px ridge rgb(16, 10, 68);
   display: flex;
   flex-direction: column-reverse;
 }
 
 .container:hover {
-border: 2px ridge rgb(206, 98, 98);
+border: 12px ridge rgb(47, 26, 116);
 }
 
 #theFirst .card {
@@ -106,7 +106,7 @@ border: 2px ridge rgb(206, 98, 98);
   font-size: 150%;
   position: absolute;
   background-repeat: no-repeat;
-  box-shadow: -5px 3px 5px 0px rgba(36, 36, 36, 0.062);
+  
 }
 
 .front, .back {
@@ -137,6 +137,7 @@ border: 2px ridge rgb(206, 98, 98);
   transform: rotateY(0deg);
   top: 0;
   left: 0;
+  box-shadow: 5px 3px 5px 2px rgba(36, 36, 36, 0.062);
 }
 
 .front {
