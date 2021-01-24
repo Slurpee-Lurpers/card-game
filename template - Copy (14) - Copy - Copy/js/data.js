@@ -1,12 +1,13 @@
 const cardFaces = ['1J.svg', '2J.svg', 'headshot1.jpg']
 
 for (let i = 0; i <= 3; i++) {
+    
     if(i === 0){
         cardSuit = 'C'
     }else if( i === 1){
         cardSuit = 'S'
     }else if( i === 2){
-        cardSuit === 'D'
+        cardSuit = 'D'
     }else if( i === 3){
         cardSuit = 'H'
     }
@@ -28,7 +29,7 @@ for (let i = 0; i <= 3; i++) {
         }
         cardFaces.push(`${cardName}${cardSuit}.svg`)
         cardNumber += 1
-
+        console.log(cardSuit)
     }
 }
 

@@ -3,65 +3,76 @@
 /*******************************************/
 
 /* Box Model Hack */
-*{
+
+* {
   box-sizing: border-box;
+}
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.clear {
+clear: both;
 }
 
 /******************************************
 /* LAYOUT
 /*******************************************/
-body{
+
+body {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
   height: 100vh;
 }
 
-.container {
-  width: 25%;
+#instructions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#theGame {
+  width: 100%;
   height: 100%;
-  border: 10px ridge rgb(206, 98, 98);
-  
-
+  display: flex;
+  flex-wrap: wrap;
+  margin:0;
 }
 
-.card{
-  border: 1px solid black;
-  border-radius: 10%;
-  width: 100px;
-  height: 140px;
-  margin: 0 auto;
-  background-size: cover;
-  font-family: monospace;
-  font-size: 150%;
+#moreInstructions {
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 2%;
-  background-repeat: no-repeat;
-  box-shadow: -5px 3px 5px 0px rgba(36, 36, 36, 0.062); 
+  justify-content: center;
+  width: 100%;
+  height: 20%;
+  margin: 1% 0;
+}
+#containerContainer {
+  height: 80%;
+  width: 100%;
+  display: flex;
+
+}
+.container {
+  width: 20%;
+  height: 100%;
+  border: 1px ridge rgb(206, 98, 98);
+  display: flex;
+  flex-direction: column-reverse;
 }
 
-/* .cardBack {
-  border: 1px solid black;
-  border-radius: 10%;
-  width: 100px;
-  height: 140px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 2%;
-  background-image: url('../img/1B.svg');
-  background-size: contain;
-  border: 1px solid black;
-} */
+.container:hover {
+border: 2px ridge rgb(206, 98, 98);
+}
 
 #theFirst .card {
   left: 8%;
-  
 }
 
 #theSecond .card {
@@ -82,29 +93,89 @@ body{
 
 
 
-#theFirst {
-  background-color: blueviolet;
+.card {
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  perspective: 1000;
+  border-radius: 10%;
+  width: 100px;
+  height: 140px;
+  margin: 0 auto;
+  font-family: monospace;
+  font-size: 150%;
+  position: absolute;
+  background-repeat: no-repeat;
+  box-shadow: -5px 3px 5px 0px rgba(36, 36, 36, 0.062);
 }
 
-#theSecond {
-  background-color: brown;
+.front, .back {
+  position: absolute;
+  background-size: cover;
+  border: 1px solid black;
+  border-radius: 10%;
+  height: 100%;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transform: rotateY(0deg);
+  -moz-transition: 0.6s;
+  -moz-transform-style: preserve-3d;
+  -moz-transform: rotateY(0deg);
+  -o-transition: 0.6s;
+  -o-transform-style: preserve-3d;
+  -o-transform: rotateY(0deg);
+  -ms-transition: 0.6s;
+  -ms-transform-style: preserve-3d;
+  -ms-transform: rotateY(0deg);
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  top: 0;
+  left: 0;
 }
 
-#theThird {
-  background-color: blue;
+.front {
+  z-index: 2;
 }
 
-#theFourth {
-  background-color: chartreuse;
+.back {
+  -webkit-transform: rotateY(-180deg);
+  -moz-transform: rotateY(-180deg);
+  -o-transform: rotateY(-180deg);
+  -ms-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
 }
 
-#theFifth {
-  background-color: deeppink;
+.flipBack{
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+  -o-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  transform: rotateY(0deg);
 }
-#theSixth{
-  background-color: aquamarine;
+
+.flipFront {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
+
+
+
+
 
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
+
+
+
+.hidden {
+  display: none !important;
+}

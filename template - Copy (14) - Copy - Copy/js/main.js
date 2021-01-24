@@ -4,136 +4,202 @@
 // const fourthArray = Array.from(document.querySelectorAll('.four'))
 // const fifthArray = Array.from(document.querySelectorAll('.five'))
 
-let arrayOfContainers = []
+let arrayOfContainers = [];
 
-const containerOne = document.getElementById('theFirst')
-const containerTwo = document.getElementById('theSecond')
-const containerThree = document.getElementById('theThird')
-const containerFour = document.getElementById('theFourth')
-const containerFive = document.getElementById('theFifth')
+const containerOne = document.getElementById("theFirst");
+const containerTwo = document.getElementById("theSecond");
+const containerThree = document.getElementById("theThird");
+const containerFour = document.getElementById("theFourth");
+const containerFive = document.getElementById("theFifth");
+const startGame = document.getElementById("startGame");
+const theGame = document.getElementById("theGame");
+const instructions = document.getElementById("instructions");
 
+theGame.addEventListener("click", doStuff);
+startGame.addEventListener("click", startTheGame);
 
+const everyCard = Array.from(document.querySelectorAll(".card"));
 
-document.querySelector('body').addEventListener('click', doStuff)
-
-let randomizedCardFaces = cardFaces.sort( () => Math.random() > .5 ? 1 : -1 );
+let randomizedCardFaces = cardFaces.sort(() => (Math.random() > 0.5 ? 1 : -1));
 window.onload = () => {
-    arrayOfContainers = [Array.from(containerOne.children), Array.from(containerTwo.children), Array.from(containerThree.children), Array.from(containerFour.children), Array.from(containerFive.children)]
+  arrayOfContainers = [
+    Array.from(containerOne.children),
+    Array.from(containerTwo.children),
+    Array.from(containerThree.children),
+    Array.from(containerFour.children),
+    Array.from(containerFive.children),
+  ];
 
-    for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-        setTimeout(() => {
-            spreadTheCards(arrayOfContainers[i], 'normal', 'forwards', 2000)
-        }, `${500 * i}`)
-    }
-
-    
-    
-    
-        
-        makeCardsHaveFaces(arrayOfContainers[0].concat(arrayOfContainers[1], arrayOfContainers[2], arrayOfContainers[3], arrayOfContainers[4]))
-        
-    
-    
-    // containerOne.children[0].style.backgroundImage = `url('../CARDS/${cardFaces[0]}')`
-}
+  makeCardsHaveFaces(document.querySelectorAll(".card"));
+  for (let i = 0; i <= everyCard.length - 1; i++) {
+    everyCard[i].children[0].classList.add("flipFront");
+    everyCard[i].children[1].classList.add("flipBack");
+  }
+  for (let i = 0; i <= everyCard.length - 1; i++) {
+    everyCard[i].animate([{ top: "110%" }], {
+      duration: 10,
+      fill: "both",
+      direction: "normal",
+    });
+  }
+};
 
 function makeCardsHaveFaces(e) {
-    for(let i = 0; i <= e.length - 1; i++){
-        e[i].style.backgroundImage = `url(./img/${randomizedCardFaces[i]})`
-    }
+  for (let i = 0; i <= e.length - 1; i++) {
+    e[
+      i
+    ].children[0].style.backgroundImage = `url(./img/${randomizedCardFaces[i]})`;
+    e[i].children[1].style.backgroundImage = `url('./img/1B.svg')`;
+    e[i].setAttribute("name", `url(./img/${randomizedCardFaces[i]})`);
+  }
 }
 
+function startTheGame() {
+  instructions.classList.toggle("hidden");
+  theGame.classList.toggle("hidden");
 
-let deckArray = []
+  initialize(everyCard);
+}
+
+//start with cards upsidedown
+//position is bottom
+//deal all cards and then flip
+
+function initialize(x) {
+  setCardStartingPlace(x);
+  setTimeout(() => {
+    flipThePilesBackOver(x);
+  }, 3600);
+
+  setTimeout(() => {
+    for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+      spreadTheCards(arrayOfContainers[i], 'normal', 'both', 1000);
+    }
+  }, 3700);
+}
+
+let deckArray = [];
+let count = 0;
+
 function doStuff(e) {
+  count++;
+  if (count === 3) {
+    document.removeEventListener("click", doStuff);
+    return;
+  }
+  if (e.target !== e.currentTarget) {
+    let theFirstPile = Array.from(containerOne.children);
 
-    if(e.target !== e.currentTarget){
+    let theSecondPile = Array.from(containerTwo.children);
 
-    let theFirstPile = Array.from(containerOne.children)
+    let theThirdPile = Array.from(containerThree.children);
 
-    let theSecondPile = Array.from(containerTwo.children)
+    let theFourthPile = Array.from(containerFour.children);
 
-    let theThirdPile = Array.from(containerThree.children)
+    let theFifthPile = Array.from(containerFive.children);
 
-    let theFourthPile = Array.from(containerFour.children)
-
-    let theFifthPile = Array.from(containerFive.children)
-
-
-
-    
-    let target
-    if (e.target.classList.contains('container')) {
-        target = e.target
-    } else if (e.target.classList.contains('card')) {
-        target = e.target.parentNode
+    let target;
+    if (e.target.classList.contains("container")) {
+      target = e.target;
+    } else if (e.target.classList.contains("card")) {
+      target = e.target.parentNode;
     }
 
-    let middleArray = []
-    let topArray = []
-    let bottomArray = []
+    let middleArray = [];
+    let topArray = [];
+    let bottomArray = [];
 
-    if (target === containerThree) {   //middle
-        middleArray = theThirdPile;
-        topArray = theFirstPile.concat(theSecondPile)
-        bottomArray = theFourthPile.concat(theFifthPile)
-
-    } else if (target === containerOne) {  //first
-        middleArray = theFirstPile;
-        topArray = theFourthPile.concat(theFifthPile)
-        bottomArray = theSecondPile.concat(theThirdPile)
-
-    } else if (target === containerTwo) {  //second
-        middleArray = theSecondPile;
-        topArray = theFifthPile.concat(theFirstPile)
-        bottomArray = theThirdPile.concat(theFourthPile)
-
-    } else if (target === containerFour) {  //fourth
-        middleArray = theFourthPile;
-        topArray = theSecondPile.concat(theThirdPile)
-        bottomArray = theFifthPile.concat(theFirstPile)
-
-    } else if (target === containerFive) {  //fifth
-        middleArray = theFifthPile;
-        topArray = theThirdPile.concat(theFourthPile)
-        bottomArray = theFirstPile.concat(theSecondPile)
-
+    if (target === containerThree) {
+      //middle
+      middleArray = theThirdPile;
+      topArray = theFirstPile.concat(theSecondPile);
+      bottomArray = theFourthPile.concat(theFifthPile);
+    } else if (target === containerOne) {
+      //first
+      middleArray = theFirstPile;
+      topArray = theFourthPile.concat(theFifthPile);
+      bottomArray = theSecondPile.concat(theThirdPile);
+    } else if (target === containerTwo) {
+      //second
+      middleArray = theSecondPile;
+      topArray = theFifthPile.concat(theFirstPile);
+      bottomArray = theThirdPile.concat(theFourthPile);
+    } else if (target === containerFour) {
+      //fourth
+      middleArray = theFourthPile;
+      topArray = theSecondPile.concat(theThirdPile);
+      bottomArray = theFifthPile.concat(theFirstPile);
+    } else if (target === containerFive) {
+      //fifth
+      middleArray = theFifthPile;
+      topArray = theThirdPile.concat(theFourthPile);
+      bottomArray = theFirstPile.concat(theSecondPile);
     }
-    deckArray = topArray.concat(middleArray, bottomArray)
+    deckArray = topArray.concat(middleArray, bottomArray);
 
-
-
-    arrayOfContainers = [Array.from(containerOne.children), Array.from(containerTwo.children), Array.from(containerThree.children), Array.from(containerFour.children), Array.from(containerFive.children)]
+    arrayOfContainers = [
+      Array.from(containerOne.children),
+      Array.from(containerTwo.children),
+      Array.from(containerThree.children),
+      Array.from(containerFour.children),
+      Array.from(containerFive.children),
+    ];
 
     for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-        setTimeout(() => {
-            goBackTheCards(arrayOfContainers[i], 'normal', 'forwards', 2000)
-        }, `${500 * i}`)
+      goBackTheCards(arrayOfContainers[i], "normal", "forwards");
     }
 
-    for (let i = 0; i <= arrayOfContainers.length - 1; i++){
-    
-    setTimeout( () => {
-        flipThePilesOver(arrayOfContainers[i])
-    }, 4500)
-    
+    for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+      setTimeout(() => {
+        flipThePilesOver(arrayOfContainers[i]);
+      }, 1000);
     }
 
+    setTimeout(() => {
+      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+        x = 48;
+        bringThePilesTogether(arrayOfContainers[i], x);
+        x -= 20;
+      }
+      reOrderTheDeck(deckArray);
+    }, 1600);
 
+    setTimeout(() => {
+      arrayOfContainers = [
+        Array.from(containerOne.children),
+        Array.from(containerTwo.children),
+        Array.from(containerThree.children),
+        Array.from(containerFour.children),
+        Array.from(containerFive.children),
+      ];
+    }, 1700);
 
+    setTimeout(() => {
+      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+        pilesToTheBottom(arrayOfContainers[i]);
+      }
+    }, 2600);
+
+    setTimeout(() => {
+      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+        setCardPlace(deckArray);
+      }
+    }, 3600);
+
+    setTimeout(() => {
+      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+        flipThePilesBackOver(arrayOfContainers[i]);
+      }
+    }, 7000);
 
     setTimeout( () => {
-        for(let i = 0; i <= arrayOfContainers.length - 1; i++){
-            x = 48;
-        bringThePilesTogether(arrayOfContainers[i], x)
-            x-= 20;
-        }
+      for(let i = 0; i <= arrayOfContainers.length - 1; i++){
+        spreadTheCards(arrayOfContainers[i], 'normal', 'both', 1000)
+      }
     }, 8000)
-    // reOrderTheDeck(deckArray)
-    
-    }
-    
+  }
 }
+
 /*
 //shuffle
 so the cards go to the middle
@@ -141,28 +207,44 @@ then
  */
 
 function reOrderTheDeck(array) {
-setTimeout(() => {
-        let x = 1
-        for (i = 0; i <= array.length - 1; i++) {
-            
-            if (x === 1) {
-                containerOne.appendChild(array[i])
-                x += 1;
-            } else if (x === 2) {
-                containerTwo.appendChild(array[i])
-                x += 1
-            } else if (x === 3) {
-                containerThree.appendChild(array[i])
-                x += 1
-            } else if (x === 4) {
-                containerFour.appendChild(array[i])
-                x += 1
-            } else if (x === 5) {
-                containerFive.appendChild(array[i])
-                x = 1
-            }
-        }
-    }, 4000)
+  setTimeout(() => {
+    let x = 1;
+    for (i = 0; i <= array.length - 1; i++) {
+      if (x === 1) {
+        containerOne.appendChild(array[i]);
+        x += 1;
+      } else if (x === 2) {
+        containerTwo.appendChild(array[i]);
+        x += 1;
+      } else if (x === 3) {
+        containerThree.appendChild(array[i]);
+        x += 1;
+      } else if (x === 4) {
+        containerFour.appendChild(array[i]);
+        x += 1;
+      } else if (x === 5) {
+        containerFive.appendChild(array[i]);
+        x = 1;
+      }
+    }
+  }, 1);
 }
 
+function setCardPlace(deck, delay) {
+  let left = 8;
+  let top = 25;
+  delay = 0;
+
+  for (let i = 0; i <= deck.length - 1; i++) {
+    setTimeout(() => {
+      if (i % 5 === 0) {
+        left = 8;
+      }
+      dealTheCards(deck[i], top, left, delay);
+
+      left += 20;
+      delay += 50;
+    }, 50);
+  }
+}
 
