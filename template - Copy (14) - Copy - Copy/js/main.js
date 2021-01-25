@@ -16,7 +16,9 @@ const startGame = document.getElementById("startGame");
 const containerContainer = document.getElementById("containerContainer");
 const instructions = document.getElementById("instructions");
 const moreInstructions = document.getElementById("moreInstructions");
-const cardnoise = document.querySelector('audio')
+const cardFlop = document.querySelector('#flop')
+const cardSwipe = document.querySelector('#swipe')
+document.querySelectorAll('audio').volume = '1%';
 startGame.addEventListener("click", startTheGame);
 
 const desktopMedia = window.matchMedia("min-width: 500px");
@@ -72,7 +74,7 @@ function startTheGame() {
 
 function initialize(x) {
   setCardStartingPlace(x);
-  cardnoise.play()
+  
   setTimeout(() => {
     flipThePilesBackOver(x);
   }, 4000);
@@ -328,10 +330,13 @@ function theReveal(e) {
   }, 1500);
   setTimeout(() => {
     // array[5].style.zIndex = '10000000000000'
-    array[5].animate([{ zIndex: "100" }], {
-      duration: 100,
+    array[5].animate([{ zIndex: "0", transform: `rotate(0deg)`, maxHeight: '237.25px', maxWidth: '156px', left : `${10 - (array[5].offsetWidth/2)/(window.innerWidth/100)+ 40}%`, top: '17%'},
+    {zIndex: "100", transform: `rotate(180deg)`, maxHeight: '474.5px', maxWidth: '312px', left : `${10 - (array[5].offsetWidth/2)/(window.innerWidth/100)+ 39}%`, top: '14%'}
+    ], {
+      duration: 500,
       fill: "forwards",
       iterations: 1,
+      easing: 'ease-in'
     });
     array[5].children[0].classList.toggle("flipFront");
     array[5].children[1].classList.toggle("flipBack");
@@ -348,11 +353,11 @@ function theReveal(e) {
 function giveInstruction(n) {
   let instruction =
     n === 0
-      ? `Choose a card - DON'T TELL ME - and keep it in mind. Now, click the column your card is in.`
+      ? `Choose a card - DON'T TELL ME - and keep it in mind.\n Now, click the column your card is in`
       : n === 1
-      ? `Be honest with me and click the column your card is in again.`
+      ? `OK, click the column your card is in again, please\n (be honest)`
       : n === 2
-      ? `Now one more time click the column your card is in.`
-      : "This is your card";
+      ? `Now...\n one more time...\n click the column your card is in.`
+      : "Is this your card... ?";
   moreInstructions.innerText = instruction;
 }

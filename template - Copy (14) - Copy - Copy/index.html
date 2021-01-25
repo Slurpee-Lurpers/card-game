@@ -10,6 +10,8 @@
     <!-- external CSS link -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -19,7 +21,7 @@
       <p id="theTitle">Welcome to David and Wolfie's Card Trick</p>
       <!-- <p>When the cards appear, choose a card and hold it in your mind</p>
       <p>Then click on the column that holds your card</p> -->
-      <input type="submit" id="startGame" value="Click Here to Start" />
+      <input type="submit" id="startGame" value="Start" />
       
     </section>
 
@@ -261,7 +263,8 @@
         </section>
       </section>
     </section>
-    <audio src="./img/cardnoise.wav"></audio>
+    <audio id="flop" src="./img/cardflop.wav"></audio>
+    <audio id="swipe" src="./img/cardswipe.wav"></audio>
     <script type="text/javascript" src="js/data.js"></script>
     <script type="text/javascript" src="js/animations.js"></script>
     <script type="text/javascript" src="js/main.js"></script>

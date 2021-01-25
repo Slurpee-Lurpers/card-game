@@ -3,17 +3,33 @@ function setCardStartingPlace(deck) {
   let lefty = 10 - (deck[0].offsetWidth/2)/(window.innerWidth/100);
   let top = 17;
   delay = 0;
+  cardFlop.volume = 0.5;
+  cardSwipe.volume=0.5;
+    
 
   for (let i = 0; i <= deck.length - 1; i++) {
+    
+    
+    
     setTimeout(() => {
       if (i > 0 && i % 11 === 0) {
         lefty += 20;
       }
       console.log(lefty)
       dealTheStartingCards(deck[i], top, lefty, delay);
-      
+      setTimeout(() => {
+        cardSwipe.currentTime = 0;
+    cardSwipe.play()
+      }, 60*i);
       delay += 50;
     }, 50);
+    setTimeout(() => {
+      setTimeout(() => {
+        cardFlop.currentTime = 0;
+    cardFlop.play()
+      }, 50*i);
+      
+    }, 900);
   }
 }
 
