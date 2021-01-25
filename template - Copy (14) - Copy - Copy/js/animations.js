@@ -1,7 +1,7 @@
 //FIRST ANIMATION ON START
 function setCardStartingPlace(deck) {
   let lefty = 10 - (deck[0].offsetWidth/2)/(window.innerWidth/100);
-  let top = 25;
+  let top = 17;
   delay = 0;
 
   for (let i = 0; i <= deck.length - 1; i++) {
@@ -34,7 +34,7 @@ function dealTheStartingCards(card, top, lefty, delay) {
 }
 
 function cascade(pile) {
-  let top = 25;
+  let top = 20;
   for (let i = 0; i < pile.length; i++) {
     pile[i].animate([{ top: `${top}%` }], {
       duration: 500,
@@ -43,14 +43,15 @@ function cascade(pile) {
       easing: "ease-out",
       
     });
-    top += 5;
+    top += 7;
   }
 }
 
 function spreadTheCards(e, direction, fill, duration) {
-  let x = 25;
+  let x = 17;
+  
   for (let i = 1; i <= e.length - 1; i++) {
-      x += 5;
+      
       e[i].animate([
 
           { top: `${x}%` }
@@ -62,7 +63,7 @@ function spreadTheCards(e, direction, fill, duration) {
               direction: direction,
               easing: 'ease-in-out'
           })
-
+    x += 6;
   }
 }
 
@@ -78,7 +79,7 @@ function flipThePilesBackOver(e) {
 function goBackTheCards(e, direction, fill, duration) {
   let x = 0;
   for (let i = 0; i <= e.length - 1; i++) {
-    e[i].animate([{ top: `${x - x + 23}%` }], {
+    e[i].animate([{ top: `${x - x + 17}%` }], {
       duration: 1000,
       fill: fill,
       iterations: 1,
@@ -122,7 +123,7 @@ function pilesToTheBottom(deck) {
 function setCardPlace(deck, delay) {
   let pp = 55;
   let left = 10 - (deck[0].offsetWidth/2)/(window.innerWidth/100);
-  let top = 25;
+  let top = 17;
   delay = 0;
 
   for (let i = 0; i <= deck.length - 1; i++) {

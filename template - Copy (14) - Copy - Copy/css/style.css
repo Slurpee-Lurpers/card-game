@@ -103,9 +103,6 @@ use {
   height: 140px;
 }
 
-/* .container:hover {
-border: 5px ridge antiquewhite;
-} */
 
 
 .card {
@@ -113,12 +110,12 @@ border: 5px ridge antiquewhite;
   -moz-perspective: 1000;
   -ms-perspective: 1000;
   perspective: 1000;
-  border-radius: 10%;
+  
   min-width: 54px;
-  min-height: 76.75px;
+  min-height: 81.75px;
   height: 13vw;
   width: 9vw;
-  max-height: 227.25px;
+  max-height: 237.25px;
   max-width: 156px;
   
   margin: 0 auto;
@@ -132,8 +129,8 @@ border: 5px ridge antiquewhite;
 .front, .back {
   position: absolute;
   background-size: cover;
-  border: 0.5px solid black;
-  border-radius: 8px;
+  background-color: rgba(19, 44, 25, 0.062);
+  
   height: 100%;
   width: 100%;
   -webkit-backface-visibility: hidden;
@@ -157,13 +154,13 @@ border: 5px ridge antiquewhite;
   transform: rotateY(0deg);
   top: 0;
   left: 0;
-  box-shadow: 3px 3px 2px 1px rgba(19, 44, 25, 0.062);
+  box-shadow: 5px 3px 2px 0px rgba(19, 44, 25, 0.062);
 }
 
 .front {
   z-index: 2;
-  background-color: white;
-  border-radius: 17px;
+ 
+  
 }
 
 .cardBoxShadow{
@@ -176,7 +173,7 @@ border: 5px ridge antiquewhite;
   -o-transform: rotateY(-180deg);
   -ms-transform: rotateY(-180deg);
   transform: rotateY(-180deg);
-  border-radius: 17px;
+  
 }
 
 .flipBack{
