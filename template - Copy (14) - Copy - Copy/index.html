@@ -8,21 +8,24 @@
     <title>Title in the tab</title>
 
     <!-- external CSS link -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
     <section id="instructions">
-      <h1>Welcome to David and Wolfie's Card Trick</h1>
-      <p>When the cards appear, choose a card and hold it in your mind</p>
-      <p>Then click on the column that holds your card</p>
+      <p id="theTitle">Welcome to David and Wolfie's Card Trick</p>
+      <!-- <p>When the cards appear, choose a card and hold it in your mind</p>
+      <p>Then click on the column that holds your card</p> -->
       <input type="submit" id="startGame" value="Click Here to Start" />
+      
     </section>
 
-    <section id="theGame" class="hidden">
-      <p id="moreInstructions">hi baby</p>
-      <section id="containerContainer">
+    <section id="containerContainer" class="hidden">
+      <p id="moreInstructions"></p>
+      <section id="theGame">
         <section id="theFirst" class="container">
           <section class="one card">
             <section class="front"></section>
@@ -258,6 +261,7 @@
         </section>
       </section>
     </section>
+    <audio src="./img/cardnoise.wav"></audio>
     <script type="text/javascript" src="js/data.js"></script>
     <script type="text/javascript" src="js/animations.js"></script>
     <script type="text/javascript" src="js/main.js"></script>

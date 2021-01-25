@@ -1,29 +1,30 @@
 //FIRST ANIMATION ON START
 function setCardStartingPlace(deck) {
-  let left = 8;
+  let lefty = 10 - (deck[0].offsetWidth/2)/(window.innerWidth/100);
   let top = 25;
   delay = 0;
 
   for (let i = 0; i <= deck.length - 1; i++) {
     setTimeout(() => {
       if (i > 0 && i % 11 === 0) {
-        left += 20;
+        lefty += 20;
       }
-      dealTheStartingCards(deck[i], top, left, delay);
+      console.log(lefty)
+      dealTheStartingCards(deck[i], top, lefty, delay);
       
       delay += 50;
     }, 50);
   }
 }
 
-function dealTheStartingCards(card, top, left, delay) {
+function dealTheStartingCards(card, top, lefty, delay) {
   card.animate(
     [
-      { top: "100%", left: "45%" },
-      { top: `${top}%`, left: `${left}%` },
+      { top: "97%", left : `${10 - (card.offsetWidth/2)/(window.innerWidth/100)+ 40}%`},
+      { top: `${top}%`, left: `${lefty}%` },
     ],
     {
-      duration: 500,
+      duration: 1000,
       fill: "forwards",
       iterations: 1,
       easing: "ease-in-out",
@@ -39,7 +40,7 @@ function cascade(pile) {
       duration: 500,
       fill: "forwards",
       iterations: 1,
-      easing: "ease-in-out",
+      easing: "ease-out",
       
     });
     top += 5;
@@ -66,7 +67,6 @@ function spreadTheCards(e, direction, fill, duration) {
 }
 
 function flipThePilesBackOver(e) {
-  
 
   for (let i = 0; i < e.length; i++) {
     e[i].children[0].classList.toggle("flipFront");
@@ -119,12 +119,40 @@ function pilesToTheBottom(deck) {
   }
 }
 
-function dealTheCards(card, top, left, delay) {
-  card.animate([{ top: `${top}%`, left: `${left}%` }], {
-    duration: 1000,
+function setCardPlace(deck, delay) {
+  let pp = 55;
+  let left = 10 - (deck[0].offsetWidth/2)/(window.innerWidth/100);
+  let top = 25;
+  delay = 0;
+
+  for (let i = 0; i <= deck.length - 1; i++) {
+    setTimeout(() => {
+      if (i % 5 === 0) {
+        
+        left = 10 - (deck[0].offsetWidth/2)/(window.innerWidth/100);
+      }
+      dealTheCards(deck[i], top, left, delay, pp);
+      console.log(i)
+      pp--
+      left += 20;
+      delay += 100;
+      
+    }, 50);
+  }
+}
+
+
+
+function dealTheCards(card, toppy, left, delay, zindex) {
+  card.animate([
+    {zIndex : `${zindex}`},
+    { top: `${toppy}%`, left: `${left}%`},
+    {zIndex : 1, top: `${toppy}%`, left: `${left}%` }
+    ], 
+    {
+    duration: 1500,
     fill: "forwards",
     iterations: 1,
-    easing: "ease-in-out",
     delay: delay,
   });
 }

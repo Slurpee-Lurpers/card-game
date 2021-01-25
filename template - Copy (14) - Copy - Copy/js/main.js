@@ -4,7 +4,7 @@
 // const fourthArray = Array.from(document.querySelectorAll('.four'))
 // const fifthArray = Array.from(document.querySelectorAll('.five'))
 let canWeClick = false;
-console.log(canWeClick)
+console.log(canWeClick);
 let arrayOfContainers = [];
 
 const containerOne = document.getElementById("theFirst");
@@ -13,30 +13,13 @@ const containerThree = document.getElementById("theThird");
 const containerFour = document.getElementById("theFourth");
 const containerFive = document.getElementById("theFifth");
 const startGame = document.getElementById("startGame");
-const theGame = document.getElementById("theGame");
+const containerContainer = document.getElementById("containerContainer");
 const instructions = document.getElementById("instructions");
-
-
+const moreInstructions = document.getElementById("moreInstructions");
+const cardnoise = document.querySelector('audio')
 startGame.addEventListener("click", startTheGame);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const desktopMedia = window.matchMedia("min-width: 500px");
 
 const everyCard = Array.from(document.querySelectorAll(".card"));
 
@@ -73,11 +56,13 @@ function makeCardsHaveFaces(e) {
     e[i].setAttribute("name", `url(./img/${randomizedCardFaces[i]})`);
   }
 }
-
+let count = 0;
 function startTheGame() {
   instructions.classList.toggle("hidden");
-  theGame.classList.toggle("hidden");
+  containerContainer.classList.toggle("hidden");
+  giveInstruction(count);
 
+  console.log(count);
   initialize(everyCard);
 }
 
@@ -87,44 +72,56 @@ function startTheGame() {
 
 function initialize(x) {
   setCardStartingPlace(x);
+  cardnoise.play()
   setTimeout(() => {
     flipThePilesBackOver(x);
-  }, 3600);
+  }, 4000);
 
   setTimeout(() => {
     for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-      spreadTheCards(arrayOfContainers[i], 'normal', 'both', 1000);
+      spreadTheCards(arrayOfContainers[i], "normal", "both", 1000);
     }
-    
-  }, 3700);
-  setTimeout( () => {
-    canWeClick = true
-    console.log(canWeClick)
-    listenToMe()
-  }, 4000)
-  
-  
+  }, 4600);
+  setTimeout(() => {
+    canWeClick = true;
+    console.log(canWeClick);
+    listenToMe();
+  }, 4000);
 }
 
-function listenToMe(){
-if(canWeClick == true){
-  theGame.addEventListener("click", doStuff);
-}else if(canWeClick == false){
-  theGame.removeEventListener("click", doStuff);
+function listenToMe() {
+  if (canWeClick == true) {
+    theGame.addEventListener("click", doStuff);
+    theGame.addEventListener("mouseover", identifyColumn);
+  } else if (canWeClick == false) {
+    theGame.removeEventListener("click", doStuff);
+    theGame.removeEventListener("mouseover", identifyColumn);
+  }
 }
+if (window.matchMedia(desktopMedia)) {
+  function identifyColumn(e) {
+    if (e.target !== e.currentTarget) {
+      let target = e.target.classList.contains("container")
+        ? e.target
+        : e.target.classList.contains("card")
+        ? e.target.parentNode
+        : e.target.parentNode.parentNode;
+      console.log(target);
+      target.style.border = "8px solid rgba(145, 142, 142, 0.233)";
+      target.onmouseleave = () => {
+        target.style.border = "none";
+      };
+    }
+  }
 }
-
-
 let deckArray = [];
-let count = 0;
 
 function doStuff(e) {
-  canWeClick = false
-  listenToMe()
-  count++;
-  if (count === 2) {
-    theGame.addEventListener('click', theReveal)
-  }
+  moreInstructions.innerText = "";
+  canWeClick = false;
+  listenToMe();
+  console.log(count);
+
   if (e.target !== e.currentTarget) {
     let theFirstPile = Array.from(containerOne.children);
 
@@ -141,7 +138,13 @@ function doStuff(e) {
       target = e.target;
     } else if (e.target.classList.contains("card")) {
       target = e.target.parentNode;
+    } else if (
+      e.target.classList.contains("front") ||
+      e.target.classList.contains("back")
+    ) {
+      target = e.target.parentNode.parentNode;
     }
+    target.style.border = 'none';
 
     let middleArray = [];
     let topArray = [];
@@ -174,6 +177,7 @@ function doStuff(e) {
       bottomArray = theFirstPile.concat(theSecondPile);
     }
     deckArray = topArray.concat(middleArray, bottomArray);
+    console.log(deckArray[0]);
 
     arrayOfContainers = [
       Array.from(containerOne.children),
@@ -195,7 +199,10 @@ function doStuff(e) {
 
     setTimeout(() => {
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-        x = 48;
+        x =
+          10 -
+          arrayOfContainers[0][0].offsetWidth / 2 / (window.innerWidth / 100) +
+          40;
         bringThePilesTogether(arrayOfContainers[i], x);
         x -= 20;
       }
@@ -228,19 +235,29 @@ function doStuff(e) {
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
         flipThePilesBackOver(arrayOfContainers[i]);
       }
-    }, 7000);
+    }, 10200);
 
-    setTimeout( () => {
-      for(let i = 0; i <= arrayOfContainers.length - 1; i++){
-        spreadTheCards(arrayOfContainers[i], 'normal', 'both', 1000)
+    setTimeout(() => {
+      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+        spreadTheCards(arrayOfContainers[i], "normal", "both", 1000);
       }
-    }, 8000)
-  }
-if(count < 2){
-  setTimeout( () => {
-    canWeClick = true
-    listenToMe()
-  }, 8500)
+    }, 11200);
+
+    count++;
+    setTimeout(() => {
+      if (count < 2) {
+        canWeClick = true;
+        listenToMe();
+      }
+      giveInstruction(count);
+    }, 11200);
+    if (count === 2) {
+      theGame.addEventListener("click", theReveal);
+      setTimeout(() => {
+      theGame.addEventListener("mouseover", identifyColumn);
+    }, 11200);
+      
+    }
   }
 }
 
@@ -274,56 +291,68 @@ function reOrderTheDeck(array) {
   }, 1);
 }
 
-function setCardPlace(deck, delay) {
-  let left = 8;
-  let top = 25;
-  delay = 0;
-
-  for (let i = 0; i <= deck.length - 1; i++) {
-    setTimeout(() => {
-      if (i % 5 === 0) {
-        left = 8;
-      }
-      dealTheCards(deck[i], top, left, delay);
-
-      left += 20;
-      delay += 50;
-    }, 50);
+function theReveal(e) {
+  
+  theGame.removeEventListener("mouseover", identifyColumn);
+  count++;
+  moreInstructions.innerText = "";
+  let target;
+  if (e.target.classList.contains("container")) {
+    target = e.target;
+  } else if (e.target.classList.contains("card")) {
+    target = e.target.parentNode;
   }
+  target.style.border = 'none';
+  let array = Array.from(target.children);
+
+  console.log(array[5]);
+  for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+    goBackTheCards(arrayOfContainers[i], "normal", "forwards");
+  }
+
+  for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+    setTimeout(() => {
+      flipThePilesOver(arrayOfContainers[i]);
+    }, 1000);
+  }
+
+  setTimeout(() => {
+    for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+      x =
+        10 -
+        arrayOfContainers[0][0].offsetWidth / 2 / (window.innerWidth / 100) +
+        40;
+      bringThePilesTogether(arrayOfContainers[i], x);
+      x -= 20;
+    }
+  }, 1500);
+  setTimeout(() => {
+    // array[5].style.zIndex = '10000000000000'
+    array[5].animate([{ zIndex: "100" }], {
+      duration: 100,
+      fill: "forwards",
+      iterations: 1,
+    });
+    array[5].children[0].classList.toggle("flipFront");
+    array[5].children[1].classList.toggle("flipBack");
+    theGame.removeEventListener("click", theReveal);
+  }, 3000);
+  setTimeout(() => {
+    giveInstruction(count);
+  }, 3000);
 }
 
-function theReveal(e){
-  let target;
-    if (e.target.classList.contains("container")) {
-      target = e.target;
-    } else if (e.target.classList.contains("card")) {
-      target = e.target.parentNode;
-    }
-    let array = Array.from(target.children)
-
-    console.log(array[5])
-   for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-      goBackTheCards(arrayOfContainers[i], "normal", "forwards");
-    }
-
-    for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-      setTimeout(() => {
-        flipThePilesOver(arrayOfContainers[i]);
-      }, 1000);
-    }
-
-    setTimeout(() => {
-      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-        x = 48;
-        bringThePilesTogether(arrayOfContainers[i], x);
-        x -= 20;
-      }
-}, 1500)
-    setTimeout( () => {
-    array[5].style.zIndex = '10000000000000'
-    array[5].children[0].classList.toggle('flipFront')
-    array[5].children[1].classList.toggle('flipBack')
-    theGame.removeEventListener('click', theReveal)
-    }, 3000 )
-    
+//make a function that takes in one parameter
+//inside create a conditional that returns a different string
+//for each increment of the parameter starting at 0 and ending at 3
+function giveInstruction(n) {
+  let instruction =
+    n === 0
+      ? `Choose a card - DON'T TELL ME - and keep it in mind. Now, click the column your card is in.`
+      : n === 1
+      ? `Be honest with me and click the column your card is in again.`
+      : n === 2
+      ? `Now one more time click the column your card is in.`
+      : "This is your card";
+  moreInstructions.innerText = instruction;
 }

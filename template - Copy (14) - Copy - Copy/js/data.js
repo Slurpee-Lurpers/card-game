@@ -1,4 +1,4 @@
-const cardFaces = ['1J.svg', '2J.svg', 'headshot1.jpg']
+const cardFaces = ['1J.svg', '2J.svg', '2B.svg']
 
 for (let i = 0; i <= 3; i++) {
     
