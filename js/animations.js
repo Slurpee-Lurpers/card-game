@@ -195,3 +195,41 @@ function dealTheCards(card, toppy, left, delay, zindex) {
     }
   );
 }
+function revealYourCard(arr){
+arr[5].animate(
+        [
+          {
+            zIndex: "0",
+            transform: `rotate(0deg)`,
+            maxHeight: "237.25px",
+            maxWidth: "156px",
+            height: "13.5vw",
+            width: "9vw",
+            left: `${
+              10 - arr[5].offsetWidth / 2 / (window.innerWidth / 100) + 40
+            }%`,
+            top: "17%",
+          },
+          {
+            zIndex: "100",
+            transform: `rotate(720deg)`,
+            maxHeight: "474.5px",
+            maxWidth: "312px",
+            height: "54vw",
+            width: "36vw",
+            left: `${
+              10 - arr[5].offsetWidth / 2 / (window.innerWidth / 100) + 30
+            }%`,
+            top: "14%",
+          },
+        ],
+        {
+          duration: 500,
+          fill: "forwards",
+          iterations: 1,
+          easing: "ease-in",
+        }
+      );
+      arr[5].children[0].classList.toggle("flipFront");
+      arr[5].children[1].classList.toggle("flipBack");
+}

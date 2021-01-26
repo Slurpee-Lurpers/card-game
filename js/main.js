@@ -37,8 +37,7 @@ let count = 0;
 
 window.onload = () => {
   //empty array is filled with the columns and their contents
-  makeAnArrayOfContainers()
-  console.log(`on load ${arrayOfContainers}`)
+  makeAnArrayOfContainers();
   //this..... is stupid. the code inside here should be.... inside the function below??
   makeCardsHaveFaces(document.querySelectorAll(".card"));
   for (let i = 0; i <= everyCard.length - 1; i++) {
@@ -55,15 +54,14 @@ window.onload = () => {
   }
 };
 
-function makeAnArrayOfContainers(){
-arrayOfContainers = [
+function makeAnArrayOfContainers() {
+  arrayOfContainers = [
     Array.from(containerOne.children),
     Array.from(containerTwo.children),
     Array.from(containerThree.children),
     Array.from(containerFour.children),
     Array.from(containerFive.children),
   ];
-  
 }
 /****************************************************************** */
 //thisa function should be renamed to setUpTheCards and the two loops in the onloadfunction above should be added
@@ -89,7 +87,7 @@ function startTheGame() {
   initialize(everyCard);
 }
 
-function playTheGameAgain(){
+function playTheGameAgain() {
   location.reload();
 }
 
@@ -103,7 +101,7 @@ function initialize(x) {
   setTimeout(() => {
     flipThePilesBackOver(x);
     canWeClick = true;
-    
+
     listenToMe();
   }, 4000);
 
@@ -128,23 +126,21 @@ function listenToMe() {
   }
 }
 
-
 function identifyColumn(e) {
   //if the target is not the conlumn container AND if the window is desktop size
   //on hover change the border
-    if (e.target !== e.currentTarget && desktopMedia.matches) {
-      let target = e.target.classList.contains("container")
-        ? e.target
-        : e.target.classList.contains("card")
-        ? e.target.parentNode
-        : e.target.parentNode.parentNode;
-      
-      target.style.border = "8px solid rgba(145, 142, 142, 0.233)";
-      target.onmouseleave = () => {
-        target.style.border = "none";
-      };
-    }
-  
+  if (e.target !== e.currentTarget && desktopMedia.matches) {
+    let target = e.target.classList.contains("container")
+      ? e.target
+      : e.target.classList.contains("card")
+      ? e.target.parentNode
+      : e.target.parentNode.parentNode;
+
+    target.style.border = "8px solid rgba(145, 142, 142, 0.233)";
+    target.onmouseleave = () => {
+      target.style.border = "none";
+    };
+  }
 }
 
 let deckArray = [];
@@ -153,22 +149,17 @@ function doStuff(e) {
   moreInstructions.innerText = "";
   canWeClick = false;
   listenToMe();
-  let googa = 0
+  let googa = 0;
   const anInterval = setInterval(() => {
-    
-    console.log(googa)
-    if(googa === 0 ){
-      console.log('go back the cards')
+    if (googa === 0) {
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-      goBackTheCards(arrayOfContainers[i], "normal", "forwards");
-    }
-    }else if( googa === 10){
+        goBackTheCards(arrayOfContainers[i], "normal", "forwards");
+      }
+    } else if (googa === 10) {
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-      
         flipThePilesOver(arrayOfContainers[i]);
       }
-      console.log('flip em')
-    }else if(googa === 16){
+    } else if (googa === 16) {
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
         x =
           10 -
@@ -178,33 +169,25 @@ function doStuff(e) {
         x -= 20;
       }
       appendTheCards(deckArray);
-      console.log("reorder the deck m'lady")
-    }else if( googa === 17){
-       arrayOfContainers = [
-        Array.from(containerOne.children),
-        Array.from(containerTwo.children),
-        Array.from(containerThree.children),
-        Array.from(containerFour.children),
-        Array.from(containerFive.children),
-      ];
-      
-      console.log(`in the do stuff function after 1.7seconds ${arrayOfContainers}`)
-    }else if(googa === 26){
+    } else if (googa === 17) {
+      makeAnArrayOfContainers();
+
+     
+    } else if (googa === 26) {
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
         pilesToTheBottom(arrayOfContainers[i]);
       }
-      console.log(`piles go DOWN`)
-    }else if(googa === 36){
+    } else if (googa === 36) {
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
         setCardPlace(deckArray);
       }
-      console.log(`deal me a winning hand`)
-    }else if(googa === 102){
+
+    } else if (googa === 102) {
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
         flipThePilesBackOver(arrayOfContainers[i]);
       }
-      console.log(`show me the faces`)
-    }else if( googa === 112){
+     
+    } else if (googa === 112) {
       giveInstruction(count);
       for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
         spreadTheCards(arrayOfContainers[i], "normal", "both", 1000);
@@ -214,28 +197,19 @@ function doStuff(e) {
         listenToMe();
       }
 
-
       if (count === 2) {
-      theGame.addEventListener("click", theReveal);
-      
+        theGame.addEventListener("click", theReveal);
+         theGame.addEventListener("mousemove", identifyColumn);
       }
-      console.log(`spread 'em!`)
-    }else if(googa === 132){
-      if (count === 2) {
-      
-      theGame.addEventListener("mousemove", identifyColumn);
-      }
-      console.log(`I think this is where the other part happens?`)
+     
     }
-    googa++
-    if(googa === 133){
-    clearInterval(anInterval)
-  }
+    googa++;
+    if (googa === 133) {
+      clearInterval(anInterval);
+    }
   }, 100);
-  
-  if (e.target !== e.currentTarget) {
-    
 
+  if (e.target !== e.currentTarget) {
     let target;
     if (e.target.classList.contains("container")) {
       target = e.target;
@@ -252,55 +226,48 @@ function doStuff(e) {
     }
 
     makeANewDeck(target);
+  }
 
-    
-
-    
-
-    
-    }
-
-    count++;  
-
+  count++;
 }
 
-function makeANewDeck(target){
+function makeANewDeck(target) {
   let theFirstPile = Array.from(containerOne.children);
-    let theSecondPile = Array.from(containerTwo.children);
-    let theThirdPile = Array.from(containerThree.children);
-    let theFourthPile = Array.from(containerFour.children);
-    let theFifthPile = Array.from(containerFive.children);
-    let middleArray = [];
-    let topArray = [];
-    let bottomArray = [];
+  let theSecondPile = Array.from(containerTwo.children);
+  let theThirdPile = Array.from(containerThree.children);
+  let theFourthPile = Array.from(containerFour.children);
+  let theFifthPile = Array.from(containerFive.children);
+  let middleArray = [];
+  let topArray = [];
+  let bottomArray = [];
 
-    if (target === containerThree) {
-      //middle
-      middleArray = theThirdPile;
-      topArray = theFirstPile.concat(theSecondPile);
-      bottomArray = theFourthPile.concat(theFifthPile);
-    } else if (target === containerOne) {
-      //first
-      middleArray = theFirstPile;
-      topArray = theFourthPile.concat(theFifthPile);
-      bottomArray = theSecondPile.concat(theThirdPile);
-    } else if (target === containerTwo) {
-      //second
-      middleArray = theSecondPile;
-      topArray = theFifthPile.concat(theFirstPile);
-      bottomArray = theThirdPile.concat(theFourthPile);
-    } else if (target === containerFour) {
-      //fourth
-      middleArray = theFourthPile;
-      topArray = theSecondPile.concat(theThirdPile);
-      bottomArray = theFifthPile.concat(theFirstPile);
-    } else if (target === containerFive) {
-      //fifth
-      middleArray = theFifthPile;
-      topArray = theThirdPile.concat(theFourthPile);
-      bottomArray = theFirstPile.concat(theSecondPile);
-    }
-    deckArray = topArray.concat(middleArray, bottomArray);
+  if (target === containerThree) {
+    //middle
+    middleArray = theThirdPile;
+    topArray = theFirstPile.concat(theSecondPile);
+    bottomArray = theFourthPile.concat(theFifthPile);
+  } else if (target === containerOne) {
+    //first
+    middleArray = theFirstPile;
+    topArray = theFourthPile.concat(theFifthPile);
+    bottomArray = theSecondPile.concat(theThirdPile);
+  } else if (target === containerTwo) {
+    //second
+    middleArray = theSecondPile;
+    topArray = theFifthPile.concat(theFirstPile);
+    bottomArray = theThirdPile.concat(theFourthPile);
+  } else if (target === containerFour) {
+    //fourth
+    middleArray = theFourthPile;
+    topArray = theSecondPile.concat(theThirdPile);
+    bottomArray = theFifthPile.concat(theFirstPile);
+  } else if (target === containerFive) {
+    //fifth
+    middleArray = theFifthPile;
+    topArray = theThirdPile.concat(theFourthPile);
+    bottomArray = theFirstPile.concat(theSecondPile);
+  }
+  deckArray = topArray.concat(middleArray, bottomArray);
 }
 /*
 //shuffle
@@ -333,7 +300,8 @@ function appendTheCards(array) {
 }
 
 function theReveal(e) {
-  theGame.removeEventListener("mouseover", identifyColumn);
+  
+  theGame.removeEventListener("mousemove", identifyColumn);
   count++;
   moreInstructions.innerText = "";
   let target;
@@ -341,116 +309,49 @@ function theReveal(e) {
     target = e.target;
   } else if (e.target.classList.contains("card")) {
     target = e.target.parentNode;
-  } else if (e.target.classList.contains("front") || e.target.classList.contains("back")) {
-      target = e.target.parentNode.parentNode;
-    }
-  if(desktopMedia.matches){
-  target.style.border = "none";
+  } else if (
+    e.target.classList.contains("front") ||
+    e.target.classList.contains("back")
+  ) {
+    target = e.target.parentNode.parentNode;
+  }
+  if (desktopMedia.matches) {
+    target.style.border = "none";
   }
   let array = Array.from(target.children);
 
-  
-  for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-    goBackTheCards(arrayOfContainers[i], "normal", "forwards");
-  }
-
-  for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-    setTimeout(() => {
-      flipThePilesOver(arrayOfContainers[i]);
-    }, 1000);
-  }
-
-  setTimeout(() => {
-    for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
-      x =
-        10 -
-        arrayOfContainers[0][0].offsetWidth / 2 / (window.innerWidth / 100) +
-        40;
-      bringThePilesTogether(arrayOfContainers[i], x);
-      x -= 20;
-    }
-  }, 1500);
-  setTimeout(() => {
-    if(desktopMedia.matches){
-    array[5].animate(
-      [
-        {
-          zIndex: "0",
-          transform: `rotate(0deg)`,
-          maxHeight: "237.25px",
-          maxWidth: "156px",
-          height: "13.5vw",
-          width: "9vw",
-          left: `${
-            10 - array[5].offsetWidth / 2 / (window.innerWidth / 100) + 40
-          }%`,
-          top: "17%",
-        },
-        {
-          zIndex: "100",
-          transform: `rotate(720deg)`,
-          maxHeight: "474.5px",
-          maxWidth: "312px",
-          height: "54vw",
-          width: "36vw",
-          left: `${
-            10 - array[5].offsetWidth / 2 / (window.innerWidth / 100) + 30
-          }%`,
-          top: "14%",
-        },
-      ],
-      {
-        duration: 500,
-        fill: "forwards",
-        iterations: 1,
-        easing: "ease-in",
-      }
-    );
-    }else{
-      array[5].animate(
-      [
-        {
-          zIndex: "0",
-          transform: `rotate(0deg)`,
-          height: "13.5vw",
-          width: "9vw",
-          left: `${
-            10 - array[5].offsetWidth / 2 / (window.innerWidth / 100) + 40
-          }%`,
-          top: "17%",
-        },
- 
-        {
-          zIndex: "100",
-          transform: `rotate(360deg)`,
-          height: "54vw",
-          width: "36vw",
-          left: `${
-            10 - array[5].offsetWidth / 2 / (window.innerWidth / 100) + 30
-          }%`,
-          top: "14%",
-        },
-      ],
-      {
-        duration: 500,
-        fill: "forwards",
-        iterations: 1,
-        easing: "ease-in",
-      }
-    );
-    }
-    array[5].children[0].classList.toggle("flipFront");
-    array[5].children[1].classList.toggle("flipBack");
-    theGame.removeEventListener("click", theReveal);
-  }, 3000);
-  setTimeout(() => {
-    giveInstruction(count);
-  }, 3000);
-  setTimeout(() => {
-    playAgain.classList.toggle("hidden");
+  let googa = 0;
+  const anInterval = setInterval(() => {
     
-  }, 3400);
-
+  
+    if (googa === 0) {
+      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+        goBackTheCards(arrayOfContainers[i], "normal", "forwards");
+      }
+    } else if (googa === 10) {
+      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+        flipThePilesOver(arrayOfContainers[i]);
+      }
+    } else if (googa === 16) {
+      for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+        x =
+          10 -
+          arrayOfContainers[0][0].offsetWidth / 2 / (window.innerWidth / 100) +
+          40;
+        bringThePilesTogether(arrayOfContainers[i], x);
+        x -= 20;
+      }
+    } else if (googa === 30) {
+      revealYourCard(array)
+      theGame.removeEventListener("click", theReveal);
+      giveInstruction(count);
+    } else if (googa === 34) {
+      playAgain.classList.toggle("hidden");
+    }else if(googa === 35){
+      clearInterval(anInterval)
+    }
+    googa++
+  }, 100);
 }
 
 //make a function that takes in one parameter
