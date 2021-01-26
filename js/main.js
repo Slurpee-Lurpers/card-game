@@ -16,14 +16,14 @@ const moreInstructions = document.getElementById("moreInstructions");
 const cardFlop = document.querySelector("#flop");
 const cardSwipe = document.querySelector("#swipe");
 const playAgain = document.getElementById("playAgain");
-
+const main = document.getElementById('main')
 playAgain.addEventListener("click", playTheGameAgain);
-
+let theFinalCard;
 startGame.addEventListener("click", startTheGame);
 //JS 'media query'
 const desktopMedia = window.matchMedia("(min-width: 600px)");
 //array of all the cards
-const everyCard = Array.from(document.querySelectorAll(".card"));
+let everyCard = Array.from(document.querySelectorAll(".card"));
 //self explanatory but: a boolean that we use to add and remove eventlisteners
 let canWeClick = false;
 
@@ -35,24 +35,24 @@ let randomizedCardFaces = cardFaces.sort(() => (Math.random() > 0.5 ? 1 : -1));
 //counter for the steps of the game
 let count = 0;
 
-window.onload = () => {
-  //empty array is filled with the columns and their contents
-  makeAnArrayOfContainers();
-  //this..... is stupid. the code inside here should be.... inside the function below??
-  makeCardsHaveFaces(document.querySelectorAll(".card"));
-  for (let i = 0; i <= everyCard.length - 1; i++) {
-    everyCard[i].children[0].classList.add("flipFront");
-    everyCard[i].children[1].classList.add("flipBack");
-  }
+// window.onload = () => {
+//   //empty array is filled with the columns and their contents
+//   makeAnArrayOfContainers();
+//   //this..... is stupid. the code inside here should be.... inside the function below??
+//   makeCardsHaveFaces(document.querySelectorAll(".card"));
+//   for (let i = 0; i <= everyCard.length - 1; i++) {
+//     everyCard[i].children[0].classList.add("flipFront");
+//     everyCard[i].children[1].classList.add("flipBack");
+//   }
 
-  for (let i = 0; i <= everyCard.length - 1; i++) {
-    everyCard[i].animate([{ top: "110%" }], {
-      duration: 10,
-      fill: "both",
-      direction: "normal",
-    });
-  }
-};
+//   for (let i = 0; i <= everyCard.length - 1; i++) {
+//     everyCard[i].animate([{ top: "110%" }], {
+//       duration: 10,
+//       fill: "both",
+//       direction: "normal",
+//     });
+//   }
+// };
 
 function makeAnArrayOfContainers() {
   arrayOfContainers = [
@@ -78,25 +78,114 @@ function makeCardsHaveFaces(e) {
 
 //this function starts the game on click of the START button on the landing page
 function startTheGame() {
+    //empty array is filled with the columns and their contents
+  makeAnArrayOfContainers();
+  //this..... is stupid. the code inside here should be.... inside the function below??
+  makeCardsHaveFaces(document.querySelectorAll(".card"));
+  for (let i = 0; i <= everyCard.length - 1; i++) {
+    everyCard[i].children[0].classList.add("flipFront");
+    everyCard[i].children[1].classList.add("flipBack");
+  }
+
+  for (let i = 0; i <= everyCard.length - 1; i++) {
+    everyCard[i].animate([{ top: "110%" }], {
+      duration: 10,
+      fill: "both",
+      direction: "normal",
+    });
+  }
   //toggle hiddens
+  doABlackOut(main)
+  setTimeout(() => {
   instructions.classList.toggle("hidden");
   containerContainer.classList.toggle("hidden");
-  //gets a sentence and fills the paragraph above the game
+  
+  }, 1500);
+  setTimeout(() => {
+    //gets a sentence and fills the paragraph above the game
   giveInstruction(count);
   //runs the starting animation
   initialize(everyCard);
+  }, 2200);
+  
+}
+
+function startTheGameAgain(deck) {
+    //empty array is filled with the columns and their contents
+    let x = 0
+  for(let i = 0; i <= deck.length -1; i++){
+    if(i > 0 && i % 11 === 0){
+      x++
+    }
+    arrayOfContainers[x].push(deck[i])
+
+  }
+  makeCardsHaveFaces(document.querySelectorAll(".card"));
+  for (let i = 0; i <= everyCard.length - 1; i++) {
+    everyCard[i].children[0].classList.add("flipFront");
+    everyCard[i].children[1].classList.add("flipBack");
+  }
+  for (let i = 0; i <= everyCard.length - 1; i++) {
+    everyCard[i].animate([{ top: "110%" }], {
+      duration: 10,
+      fill: "both",
+      direction: "normal",
+    });
+  }
+  setTimeout(() => {
+    //gets a sentence and fills the paragraph above the game
+  giveInstruction(count);
+  //runs the starting animation
+  initialize(everyCard);
+  }, 2200);
 }
 
 function playTheGameAgain() {
-  location.reload();
+  
+  randomizedCardFaces = cardFaces.sort(() => (Math.random() > 0.5 ? 1 : -1));
+  moreInstructions.innerText = ''
+canWeClick = false
+arrayOfContainers = [[], [], [], [], []];
+count = 0
+
+
+doABlackOut(main)
+setTimeout(() => {
+  
+  
+}, 1000);
+
+setTimeout(() => {
+theGame.innerHTML = htmlReset;
+everyCard = Array.from(document.querySelectorAll(".card"));
+startTheGameAgain(everyCard)
+
+}, 1500);
+
 }
 
 //start with cards upsidedown
 //position is bottom
 //deal all cards and then flip
-
 function initialize(x) {
   setCardStartingPlace(x);
+
+  setTimeout(() => {
+    flipThePilesBackOver(x);
+    canWeClick = true;
+
+    listenToMe();
+  }, 4000);
+
+  setTimeout(() => {
+    for (let i = 0; i <= arrayOfContainers.length - 1; i++) {
+      spreadTheCards(arrayOfContainers[i], "normal", "both", 1000);
+    }
+  }, 4600);
+}
+
+function reInitialize(x) {
+  setCardPlace(x);
 
   setTimeout(() => {
     flipThePilesBackOver(x);
@@ -144,7 +233,6 @@ function identifyColumn(e) {
 }
 
 let deckArray = [];
-
 function doStuff(e) {
   moreInstructions.innerText = "";
   canWeClick = false;
@@ -319,7 +407,7 @@ function theReveal(e) {
     target.style.border = "none";
   }
   let array = Array.from(target.children);
-
+  theFinalCard = array[5]
   let googa = 0;
   const anInterval = setInterval(() => {
     
@@ -342,7 +430,7 @@ function theReveal(e) {
         x -= 20;
       }
     } else if (googa === 30) {
-      revealYourCard(array)
+      revealYourCard(theFinalCard, 'normal')
       theGame.removeEventListener("click", theReveal);
       giveInstruction(count);
     } else if (googa === 34) {

@@ -195,8 +195,8 @@ function dealTheCards(card, toppy, left, delay, zindex) {
     }
   );
 }
-function revealYourCard(arr){
-arr[5].animate(
+function revealYourCard(card, direction){
+card.animate(
         [
           {
             zIndex: "0",
@@ -206,7 +206,7 @@ arr[5].animate(
             height: "13.5vw",
             width: "9vw",
             left: `${
-              10 - arr[5].offsetWidth / 2 / (window.innerWidth / 100) + 40
+              (card.offsetWidth / 2) / (window.innerWidth / 100) + 40
             }%`,
             top: "17%",
           },
@@ -218,18 +218,33 @@ arr[5].animate(
             height: "54vw",
             width: "36vw",
             left: `${
-              10 - arr[5].offsetWidth / 2 / (window.innerWidth / 100) + 30
+              (card.offsetWidth / 2) / (window.innerWidth / 100) + 40
             }%`,
             top: "14%",
           },
         ],
         {
           duration: 500,
+          direction: direction,
           fill: "forwards",
           iterations: 1,
           easing: "ease-in",
         }
       );
-      arr[5].children[0].classList.toggle("flipFront");
-      arr[5].children[1].classList.toggle("flipBack");
+      card.children[0].classList.toggle("flipFront");
+      card.children[1].classList.toggle("flipBack");
+}
+
+function doABlackOut(section){
+  section.animate([
+    {opacity: '1'},
+    {opacity: '0'},
+    {opacity: '0'},
+    {opacity: '1'}
+    ],
+    {
+      duration: 3000,
+      fill: 'forwards',
+      iterations: 1
+  })
 }
