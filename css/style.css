@@ -115,26 +115,29 @@ use {
   
   min-width: 54px;
   min-height: 81.75px;
-  height: 13.5vw;
+  height: 14.1vw;
   width: 9vw;
   max-height: 237.25px;
   max-width: 156px;
   
+  overflow: hidden;
   margin: 0 auto;
   position: absolute;
   background-repeat: no-repeat;
-  transform-origin: 50% 50%;
+  
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .front, .back {
   position: absolute;
   background-size: cover;
   background-color: rgba(19, 44, 25, 0.062);
-  
+  border: 0.1vh solid black;
+  border-radius: 8%;
   height: 100%;
   width: 100%;
+  
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
@@ -154,8 +157,9 @@ use {
   transition: 1s;
   transform-style: preserve-3d;
   transform: rotateY(0deg);
-  top: 0;
-  left: 0;
+  
+  
+  
   box-shadow: 5px 3px 2px 0px rgba(19, 44, 25, 0.062);
 }
 
@@ -230,8 +234,9 @@ input {
 #moreInstructions {
   height: 200px;
   max-height: 10vh;
-  font-size: 5vw;
-  margin: 5vw 3vw 2vh 3vw;
+  font-size: 4.5vw;
+  line-height: 7vw;
+  margin: 5vw 5vw 2vh 5vw;
 }
 #theGame{
 
