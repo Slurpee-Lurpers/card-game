@@ -21,6 +21,9 @@ const cardSwipe = document.querySelector('#swipe')
 document.querySelectorAll('audio').volume = '1%';
 startGame.addEventListener("click", startTheGame);
 
+const playAgain = document.getElementById("playAgain");
+// playAgain.addEventListener("click", playTheGameAgain);
+
 const desktopMedia = window.matchMedia("min-width: 500px");
 
 const everyCard = Array.from(document.querySelectorAll(".card"));
