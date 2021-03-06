@@ -5,7 +5,6 @@
     <meta name="description" content="This is where your description goes" />
     <meta name="keywords" content="one, two, three" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
     <title>Title in the tab</title>
 
     <!-- external CSS link -->
@@ -19,18 +18,20 @@
   </head>
 
   <body>
+  <section id="blackout"></section>
+  <section id="main">
     <section id="instructions">
       <p id="theTitle">Welcome to David and Wolfie's Card Trick</p>
       <!-- <p>When the cards appear, choose a card and hold it in your mind</p>
       <p>Then click on the column that holds your card</p> -->
       <input type="submit" id="startGame" value="Start" />
-      
+    
     </section>
 
     <section id="containerContainer" class="hidden">
       <p id="moreInstructions"></p>
-      <input type="submit" id="playAgain" class="hidden" value="Play Again" />
       <section id="theGame">
+        <input type="submit" id="playAgain" class="hidden" value="Play Again" />
         <section id="theFirst" class="container">
           <section class="one card">
             <section class="front"></section>
@@ -265,6 +266,7 @@
           </section>
         </section>
       </section>
+    </section>
     </section>
     <audio id="flop" src="./img/cardflop.wav"></audio>
     <audio id="swipe" src="./img/cardswipe.wav"></audio>
